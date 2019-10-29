@@ -1,0 +1,3 @@
+[submodule "src/common_deps/OutputManager"]
+	path = src/common_deps/OutputManager
+	url = git@github.com:Cheeto836/OutputManager.git
