@@ -1,0 +1,19 @@
+connection protocol
+
+application on phone
+  until init is pressed, have an open socket waiting for a connection from the application
+  if connection is made
+    send variable information (gathered from class setup)
+    once information is sent
+      thread listening for variable change packets
+      thread sending variable information packets
+  if no connection is made
+    read config file from phone and load variables with that information
+
+application on computer
+  attempt connection to application on phone
+  once connection is made
+    listen for variable information
+    once all variables are recieved
+      thread listening for variable change packets
+      thread sending variable information to for writable values

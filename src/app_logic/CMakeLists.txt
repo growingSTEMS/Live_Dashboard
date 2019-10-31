@@ -2,9 +2,11 @@ project(Live_Dashboard_Logic)
 
 set(src
   src/LiveDashboard.cpp
+  src/AppSettings.cpp
 )
 set(inc
   inc/LiveDashboard.h
+  inc/AppSettings.h
 )
 
 add_library(${PROJECT_NAME} STATIC ${src} ${inc})
