@@ -13,14 +13,13 @@ namespace GrowingStems
   {
     class LiveDashboard
     {
-    public:
-      //type aliases
-
     private:
       //member data
       std::unique_ptr<AppSettings> m_settings;
       std::shared_ptr<cheeto::OutputManager> m_log;
       std::unique_ptr<NetworkManager> m_netMan;
+      std::unordered_map<std::string, double> m_readOnlyVars;
+      std::unordered_map<std::string, double> m_writeVars;
 
       //private functions
 
@@ -31,6 +30,8 @@ namespace GrowingStems
       ~LiveDashboard();
 
       //public functions
+      void connectToApplication();
+      void disconnectFromApplication();
 
       //getters
 

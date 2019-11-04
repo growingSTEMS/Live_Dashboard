@@ -10,7 +10,7 @@ namespace GrowingStems
   {
     namespace Packets
     {
-      struct Header
+      struct BasePacket
       {
         enum PacketType
         {
@@ -21,7 +21,7 @@ namespace GrowingStems
 
         PacketType packetType;
       };
-      struct ConnectionUpdate
+      struct ConnectionUpdate : public BasePacket
       {
         enum ConnectionStatus
         {
@@ -29,17 +29,15 @@ namespace GrowingStems
           Disconnect
         };
 
-        Header header;
         ConnectionStatus oldStatus;
         ConnectionStatus newStatus;
       };
-      struct VarInformation
+      struct VarInformation : public BasePacket
       {
-        Header header;
         std::string varName;
         double value;
       };
-      struct EndOfOp
+      struct EndOfOp : public BasePacket
       {
         enum Operations
         {
@@ -47,7 +45,6 @@ namespace GrowingStems
           VAR_GATHERING,
         };
 
-        Header header;
         Operations op;
       };
     }
@@ -67,9 +64,9 @@ namespace GrowingStems
       virtual void sendEndOfOp(const Packets::EndOfOp& endOfOp) = 0;
 
       //receive data functions
-      virtual Packets::ConnectionUpdate receivedConnectionUpdate() = 0;
-      virtual Packets::VarInformation receivedVarInfo() = 0;
-      virtual Packets::EndOfOp receivedEndOfOp() = 0;
+      //virtual Packets::ConnectionUpdate receivedConnectionUpdate() = 0;
+      //virtual Packets::VarInformation receivedVarInfo() = 0;
+      //virtual Packets::EndOfOp receivedEndOfOp() = 0;
     };
   }
 }
