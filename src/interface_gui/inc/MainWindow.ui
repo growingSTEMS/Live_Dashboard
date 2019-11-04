@@ -6,47 +6,91 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1283</width>
+    <height>902</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Live Dashboard</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0" colspan="2">
+     <widget class="QTableWidget" name="tblVars"/>
+    </item>
+    <item row="1" column="1">
+     <widget class="QPushButton" name="btnRefresh">
+      <property name="text">
+       <string>Refresh Data</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="btnSend">
+      <property name="text">
+       <string>Send Data</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QPushButton" name="btnConnection">
+      <property name="text">
+       <string>Connect</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1283</width>
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="mnuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actConnect"/>
+    <addaction name="actDisconnect"/>
+   </widget>
+   <widget class="QMenu" name="mnuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actPreferences"/>
+   </widget>
+   <widget class="QMenu" name="mnuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actAbout"/>
+   </widget>
+   <addaction name="mnuFile"/>
+   <addaction name="mnuEdit"/>
+   <addaction name="mnuHelp"/>
   </widget>
-  <action name="actionOpen_Fight">
+  <action name="actConnect">
    <property name="text">
-    <string>Open Fight</string>
+    <string>Connect</string>
    </property>
   </action>
-  <action name="actionStart_Fight">
+  <action name="actDisconnect">
    <property name="text">
-    <string>Start Fight</string>
+    <string>Disconnect</string>
    </property>
   </action>
-  <action name="actionStop_Fight">
+  <action name="actPreferences">
    <property name="text">
-    <string>Stop Fight</string>
+    <string>Preferences</string>
    </property>
   </action>
-  <action name="actionAbout">
+  <action name="actAbout">
    <property name="text">
     <string>About</string>
-   </property>
-  </action>
-  <action name="actionSettings">
-   <property name="text">
-    <string>Settings</string>
    </property>
   </action>
  </widget>
