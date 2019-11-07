@@ -7,6 +7,8 @@ set(src
 set(inc
   inc/LiveDashboard.h
   inc/AppSettings.h
+  inc/NetworkManager.h
+  inc/CommonTypes.h
 )
 
 add_library(${PROJECT_NAME} STATIC ${src} ${inc})

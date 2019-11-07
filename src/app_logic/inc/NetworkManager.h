@@ -3,6 +3,9 @@
 
 #include <functional>
 #include <memory>
+#include <queue>
+
+#include "CommonTypes.h"
 
 namespace GrowingStems
 {
@@ -59,14 +62,12 @@ namespace GrowingStems
       virtual ~NetworkManager();
 
       //send data functions
-      virtual void sendConnectionUpdate(const Packets::ConnectionUpdate& conUpdate) = 0;
-      virtual void sendVarInfo(const Packets::VarInformation& varInfo) = 0;
-      virtual void sendEndOfOp(const Packets::EndOfOp& endOfOp) = 0;
+      virtual void sendVariable(const Variable& var) = 0;
+      virtual void sendVars(const std::unordered_map<std::string, Variable> vars) = 0;
 
       //receive data functions
-      //virtual Packets::ConnectionUpdate receivedConnectionUpdate() = 0;
-      //virtual Packets::VarInformation receivedVarInfo() = 0;
-      //virtual Packets::EndOfOp receivedEndOfOp() = 0;
+      virtual std::unordered_map<std::string, Variable> getNewestVarStates() = 0;
+      virtual std::queue<Variable> getAllVarUpdates() = 0;
     };
   }
 }

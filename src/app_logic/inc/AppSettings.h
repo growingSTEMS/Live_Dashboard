@@ -22,9 +22,9 @@ namespace GrowingStems
     class AppSettings
     {
     public:
-      static Verbosity verbosity;
-      static std::string logPath;
-      static bool verboseLog;
+      Verbosity verbosity = Verbosity::INFO;
+      std::string logPath = "./";
+      bool verboseLog = false;
     };
   }
 }

@@ -1,15 +1,5 @@
 #include "AppSettings.h"
 
-namespace GrowingStems
-{
-  namespace LiveDashboard
-  {
-    Verbosity AppSettings::verbosity = Verbosity::INFO;
-    std::string AppSettings::logPath = "./";
-    bool AppSettings::verboseLog = false;
-  }
-}
-
 std::ostream& operator<<(std::ostream& out, const GrowingStems::LiveDashboard::Verbosity& toPrint)
 {
   switch (toPrint)
