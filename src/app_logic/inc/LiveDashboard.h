@@ -8,9 +8,13 @@
 #include <atomic>
 
 #include "AppSettings.h"
-#include "OutputManager.h"
 #include "NetworkManager.h"
 #include "CommonTypes.h"
+
+namespace cheeto
+{
+  class OutputManager;
+}
 
 namespace GrowingStems
 {
@@ -26,7 +30,6 @@ namespace GrowingStems
       //member data
       std::unique_ptr<AppSettings> m_settings;
       std::unique_ptr<NetworkManager> m_netMan;
-      std::unique_ptr<VarCallbackFunc_t> m_varCallback; //for a-periodic use cases //TODO
 
       std::unique_ptr<std::thread> m_networkThread;
       std::atomic<bool> m_running;
@@ -56,7 +59,8 @@ namespace GrowingStems
 
     public:
       //constructors
-      LiveDashboard(const AppSettings& appSettings, const NetworkManager& netMan,
+      LiveDashboard(std::shared_ptr<AppSettings> appSettings,
+                    std::unique_ptr<NetworkManager> netMan,
                     std::shared_ptr<cheeto::OutputManager> outputManager);
       ~LiveDashboard();
 
@@ -76,7 +80,12 @@ namespace GrowingStems
         * disconnect the live dashboard from the robot application
         */
       void disconnectFromApplication();
-      void varUpdated(const Variable& var);
+      /**
+        * Will update a user controllable variable
+        * @param var: variable to be updated
+        * @return: true if the variable was updated, false otherwise
+        */
+      bool updateVar(const Variable& var);
 
       //getters
       std::unordered_map<std::string, Variable> getVarMap() const; //for periodic use cases

@@ -8,8 +8,10 @@ find_package(Qt5Widgets REQUIRED)
 
 set(src src/main.cpp
         src/MainWindow.cpp
+        src/GuiNetworkManager.cpp
 )
 set(inc inc/MainWindow.h
+        inc/GuiNetworkManager.h
 )
 set(forms inc/MainWindow.ui
 )

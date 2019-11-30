@@ -1,6 +1,7 @@
 #include <unordered_set>
 
 #include "LiveDashboard.h"
+#include "OutputManager.h"
 
 namespace GrowingStems
 {
@@ -30,6 +31,9 @@ namespace GrowingStems
         //send variables that changed
         for (const auto& var : newVars)
         {
+          if (!var.second.readOnly)
+          {
+          } //end  if (!var.second.readOnly)
         } //end  for (const auto& var : newVars)
       } //end  while (m_running)
     }
@@ -52,15 +56,25 @@ namespace GrowingStems
     }
 
     //constructors
-    LiveDashboard::LiveDashboard(const AppSettings& appSettings, const NetworkManager& netMan,
-                  std::shared_ptr<cheeto::OutputManager> outputManager)
+    LiveDashboard::LiveDashboard(std::shared_ptr<AppSettings> appSettings,
+                                 std::unique_ptr<NetworkManager> netMan,
+                                 std::shared_ptr<cheeto::OutputManager> outputManager) :
+      m_settings(std::make_unique<AppSettings>(appSettings)),
+      m_netMan(std::move(netMan)),
+      m_running(false)
     {
       shutdown();
 
-      m_settings = std::make_unique<AppSettings>(appSettings);
-      m_netMan = std::make_unique<NetworkManager>(netMan);
-
-      m_log = outputManager;
+      if (outputManager == nullptr)
+      {
+        m_log = std::make_shared<cheeto::OutputManager>();
+        m_log->addOutputLocation("stdout", std::cout, (int)Verbosity::INFO, std::chrono::milliseconds(20), "\n");
+        (*m_log)((int)Verbosity::WARNING) << "WARNING: LiveDashboard: no output manager provided. operating in degraded logging state";
+      } //end  if (outputManager == nullptr)
+      else
+      {
+        m_log = outputManager;
+      } //end  else
     }
     LiveDashboard::~LiveDashboard()
     {
@@ -79,7 +93,7 @@ namespace GrowingStems
       auto connected = false;
       auto startConnectTime = std::chrono::steady_clock::now();
       auto elapsedTime = startConnectTime - startConnectTime;
-      while (!connected && std::chrono::duration<std::chrono::milliseconds>(elapsedTime).count() > timeout)
+      while (!connected && std::chrono::duration_cast<std::chrono::milliseconds>(elapsedTime) > timeout)
       {
         //TODO connection attempt code
 
@@ -98,6 +112,15 @@ namespace GrowingStems
       //TODO code to disconnect
 
       shutdown();
+    }
+    bool LiveDashboard::updateVar(const Variable& var)
+    {
+      if (m_vars.count(var.name))
+      {
+        m_vars[var.name].val = var.val;
+        return true;
+      } //end  if (m_vars.count(var.name))
+      return false;
     }
 
     //getters
